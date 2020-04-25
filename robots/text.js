@@ -42,13 +42,19 @@ nlu.analyze(
 });
 */
 
+
+const state = require('./state.js')
+
 //eh um singleton
-async function robot(content){
+async function robot(){
+    const content = state.load()
     await fetchContentFromWikipedia(content)    
     sanitizeContent(content)
     breakContentIntoSentences(content)
     limitMaximumSentences(content)
     await fetchKeywordOfAllSentences(content)
+
+    state.save(content)
 
     //toda funcao assincrona retorna uma promise
     //console.log('logando na linha abaixo se a funcao "fetchContentFromWikipedia" retorna uma promise ')

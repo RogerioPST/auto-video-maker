@@ -1,33 +1,20 @@
-//modulo usado para pegar o input do usuario
-const readline = require('readline-sync')
 
 const robots = {
-    text: require('./robots/text.js')
+    input: require('./robots/input.js'),
+    text: require('./robots/text.js'),
+    state: require('./robots/state.js'),
 }
 
 async function start(){
-    const content ={
-        maximumSentences : 7
-    }
-
-    content.searchTerm = askAndReturnSearchTerm()
-    content.prefix = askAndReturnPrefix()
-
-    await robots.text(content)
-
-    function askAndReturnSearchTerm(){        
-        return readline.question('Type a Wikipedia search term: ')
-    }
-
-    function askAndReturnPrefix(){
-        const prefixes = ['Who is', 'What is', 'The history of']
-        const selectedPrefixIndex = readline.keyInSelect(prefixes, 'Choose one option: ')
-        const selectedPrefixText = prefixes[selectedPrefixIndex]
-        //console.log(selectedPrefixText)
-        return selectedPrefixText
-    }
-
-    console.log(JSON.stringify(content, null, 4))
+    
+    robots.input()
+    await robots.text()
+  
+    const content = robots.state.load()
+//console.dir mantem o log original do console.log, mas mantem td profundida 
+//e ainda imprime de forma bonita
+    console.dir(content, { depth: null})
+    //console.log(JSON.stringify(content, null, 4))
 
 }
 
