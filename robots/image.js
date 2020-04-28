@@ -1,6 +1,8 @@
 // use strict - O que é ela faz basicamente é melhorar a qualidade do código, pois chama exceções quando usamos variáveis não declaradas, por exemplo
 'use strict';
 
+const imageDownloader = require('image-downloader')
+
 // a linha debaixo equivale a isso
 //const {google} = require('googleapis');
 const google = require('googleapis').google
@@ -13,6 +15,7 @@ async function robot(){
     const content = state.load()
 
     await fetchImagesOfAllSentences(content)
+    await downloadAllImages(content)
 
     state.save(content)
     
@@ -47,7 +50,38 @@ async function robot(){
         })
 
         return imagesUrl
-    }            
+    }       
+    
+    async function downloadAllImages(content){
+        content.downloadedImages = []
+
+        for(let sentenceIndex =0; sentenceIndex < content.sentences.length; sentenceIndex++){
+            const images = content.sentences[sentenceIndex].images
+
+            for (let imageIndex =0; imageIndex < images.length; imageIndex++){
+                const imageURL = images[imageIndex]  
+                
+                try{
+                    if (content.downloadedImages.includes(imageURL)){
+                        throw new Error('Imagem já foi baixada')
+                    }
+                    await downloadAndSave(imageURL, `${sentenceIndex}-original.png`)
+                    content.downloadedImages.push(imageURL)
+                    console.log(`> [${sentenceIndex}][${imageIndex}] Baixou imagem com sucesso ${imageURL}`)
+                    break
+                }catch(error){
+                    console.log(`>[${sentenceIndex}][${imageIndex}] Erro ao baixar imagem: ${imageURL} - ${error}`)                            
+                }
+            }
+        }
+    }
+
+    async function downloadAndSave(url, fileName){
+        return imageDownloader.image({
+            url: url, 
+            dest: `./content/${fileName}`
+        })
+    }
 }
 
 module.exports = robot
