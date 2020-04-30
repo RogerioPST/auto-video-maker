@@ -1,10 +1,19 @@
 const fs = require('fs')
 const contentFilePath = './content.json'
+const scriptFilePath = './content/after-effects-script.js'
 
 function save(content){
     const contentString = JSON.stringify(content)
     return fs.writeFileSync(contentFilePath, contentString)
 }
+
+//para o after effects, eh necessário um arquivo javascript em q a estrategia vai ser
+//criar esse arquivo com o codigo "var content =${contentString}"
+function saveScript(content) {
+    const contentString = JSON.stringify(content)
+    const scriptString = `var content = ${contentString}`
+    return fs.writeFileSync(scriptFilePath, scriptString)
+  }
 
 function load(){
     const fileBuffer = fs.readFileSync(contentFilePath, 'utf-8')
@@ -22,5 +31,6 @@ function load(){
 
 module.exports ={
     save, 
+    saveScript,
     load
 }
