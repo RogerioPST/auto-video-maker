@@ -2,7 +2,7 @@
 var Jimp = require('jimp');
  
 // open a file called "lenna.png"
-/* Jimp.read('./content/0-original.png', (err, lenna) => {
+ Jimp.read('./content/0-original.png', (err, lenna) => {
   if (err) throw err;
   lenna
     .resize(256, 256) // resize
@@ -10,7 +10,7 @@ var Jimp = require('jimp');
     .greyscale() // set greyscale
     .write('lena-small-bw.jpg'); // save
 });
- */
+ 
 //using promises
 
  
@@ -31,7 +31,7 @@ Jimp.read(imginput)
                 opacityDest: 0.9                                
             })
             //.resize(1290,1080) // resize                        
-            .write('./content/0-composicao.png')
+            .write('./content/0-teste-composicao.png')
             })
             .catch(err => {
                 console.error(err);

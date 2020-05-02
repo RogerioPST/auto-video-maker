@@ -1,5 +1,6 @@
 /*
-Pessoal, como alternativa ao after effects, no github do felvieira tem um código que usa um ou outro dependendo do parametro q vc passar e funcionou blzinha.
+Pessoal, como alternativa ao after effects, no github do felvieira tem um código que usa um ou outro dependendo do parametro q vc passar e 
+funcionou blzinha.
 vc soh precisa instalar as libs necessárias que o apfjunior colocou:
 # Videoshow
 $ npm i videoshow
@@ -61,8 +62,7 @@ async function robot(){
             console.log(`> Image converted: ${inputFile}`)            
             return newImg
             .resize(width, height) // resize
-            .quality(60) // set JPEG quality   
-            .blur(10)         
+            .quality(60) // set JPEG quality                     
             .write(outputFile)
         })
         .catch(err => {
