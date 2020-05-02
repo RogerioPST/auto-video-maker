@@ -18,14 +18,31 @@ async function robot(){
 
     state.save(content)
     
-    async function fetchImagesOfAllSentences(content){
+   /*  async function fetchImagesOfAllSentences(content){
         for (const sentence of content.sentences){
             const query = `${content.searchTerm} ${sentence.keywords[0]}`
             sentence.images = await fetchGoogleAndReturnImagesLinks(query)
 
             sentence.googleSearchQuery = query
         }            
-    }
+    } */
+
+    async function fetchImagesOfAllSentences(content) {
+        for (let sentenceIndex = 0; sentenceIndex < content.sentences.length; sentenceIndex++) {
+          let query
+    
+          if (sentenceIndex === 0) {
+            query = `${content.searchTerm}`
+          } else {
+            query = `${content.searchTerm} ${content.sentences[sentenceIndex].keywords[0]}`
+          }
+    
+          console.log(`> [image-robot] Querying Google Images with: "${query}"`)
+    
+          content.sentences[sentenceIndex].images = await fetchGoogleAndReturnImagesLinks(query)
+          content.sentences[sentenceIndex].googleSearchQuery = query
+        }
+      }
     
     //const imagesArray = await fetchGoogleAndReturnImagesLinks('Michael Jackson')
     //console.dir(imagesArray, { depth: null})
@@ -62,14 +79,14 @@ async function robot(){
                 
                 try{
                     if (content.downloadedImages.includes(imageURL)){
-                        throw new Error('Imagem já foi baixada')
+                        throw new Error('Image already downloaded')
                     }
                     await downloadAndSave(imageURL, `${sentenceIndex}-original.png`)
                     content.downloadedImages.push(imageURL)
-                    console.log(`> [${sentenceIndex}][${imageIndex}] Baixou imagem com sucesso ${imageURL}`)
+                    console.log(`> [${sentenceIndex}][${imageIndex}] Image succesfully downloaded: ${imageURL}`)
                     break
                 }catch(error){
-                    console.log(`>[${sentenceIndex}][${imageIndex}] Erro ao baixar imagem: ${imageURL} - ${error}`)                            
+                    console.log(`>[${sentenceIndex}][${imageIndex}] Download Image Error: ${imageURL} - ${error}`)                            
                 }
             }
         }

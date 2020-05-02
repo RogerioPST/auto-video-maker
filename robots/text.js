@@ -119,6 +119,7 @@ async function robot(){
     async function fetchKeywordOfAllSentences(content){
         for (const sentence of content.sentences){
             sentence.keywords = await fetchWatsonAndReturnKeyWords(sentence.text)
+            console.log(`> [text-robot] Keywords: ${sentence.keywords.join(', ')}\n`)
             //console.log(sentence.keywords)
         }
     }
