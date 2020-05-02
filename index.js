@@ -7,14 +7,16 @@ const robots = {
     state: require('./robots/state.js'),
     image: require('./robots/image.js'),
     video: require('./robots/video.js'),
+    youtube: require('./robots/youtube.js'),
 }
 
 async function start(){
     
-    robots.input()
-    await robots.text()
-    await robots.image()
-    await robots.video()
+ //   robots.input()
+  //  await robots.text()
+  //  await robots.image()
+  //  await robots.video()
+    await robots.youtube()
   
     //const content = robots.state.load()
 //console.dir mantem o log original do console.log, mas mantem td profundida 
