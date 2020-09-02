@@ -23,7 +23,7 @@
     "algorithmia": "^0.3.10",
     "express": "^4.17.1",
     "ffmpeg": "0.0.4",
-    "googleapis": "^38.0.0",
+    "googleapis": "^39.1.0",
     "ibm-watson": "^5.5.0",
     "image-downloader": "^3.5.0",
     "jimp": "^0.10.3",
